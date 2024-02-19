@@ -1,0 +1,37 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=user
+    ports:
+      - "3307:3306"
+    volumes:
+      - demo:/data/db
+    networks:
+      - spring-network
+
+  backend:
+    build: .
+    restart: always
+    container_name: application
+    ports:
+      - "8085:8085"
+    depends_on:
+      - db
+    networks:
+      - spring-network
+    environment:
+      - MYSQL_HOST=mysql-db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_PORT=3306
+
+volumes:
+  demo:
+
+networks:
+  spring-network:
+    driver: bridge

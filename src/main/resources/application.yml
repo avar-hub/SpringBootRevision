@@ -1,0 +1,40 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #It is inserted because sql query runs before the entity creation
+    defer-datasource-initialization: true
+    #This is to specify that if we are not using embedded db like H2 and we want to execute our sql scripts to insert data
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: jdbc:mysql://mysql-db:3306/user
+    username: root
+    password: password
+#It is for the connection of the h2 db
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    username: avar
+#    password: mittal
+#    driver-class-name: org.h2.Driver
+
+
+
+#  security:
+#    user:
+#      name: avar
+#      password: mittal
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
