@@ -1,3 +1,6 @@
+
+#In this file we have to build the project , login into our docker-hub , build a docker image , push into docker hub
+
 name: Java CI with Gradle
 
 on:
@@ -21,3 +24,13 @@ jobs:
 
       - name: Build with maven
         run: gradle clean build
+
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: avarm01/springboot-revision
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
